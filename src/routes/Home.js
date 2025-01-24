@@ -9,14 +9,12 @@ function Home() {
   const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
+    const getData = () => {
+      let data = localStorage.getItem("notes");
+      setNotesItem(data ? JSON.parse(data) : []); // Safely parse data if available
+    };
     getData();
-  }, []);
-
-  function getData() {
-    let data = localStorage.getItem("notes");
-    setNotesItem(JSON.parse(data));
-    return notesItem;
-  }
+  }, []); // Run only once when the component mounts
 
   const handleChange = (e) => {
     let name = e.target.name;
