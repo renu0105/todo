@@ -29,7 +29,7 @@ function Home() {
     if (!title && !task) {
       return alert("Please enter proper todo");
     }
-    let prevNote = getData();
+    let prevNote = notesItem;
     let notes = [{ title, task }];
     let newNote;
     if (prevNote) {
@@ -39,30 +39,29 @@ function Home() {
     }
 
     localStorage.setItem("notes", JSON.stringify(newNote));
-    getData();
+    setNotesItem(newNote);
     setTitle("");
     setTask("");
   };
-  console.log(notesItem);
 
   const handleDelete = (i) => {
-    notesItem.splice(i, 1);
-    localStorage.setItem("notes", JSON.stringify(notesItem));
-    getData();
+    const updatedNotes = [...notesItem];
+    updatedNotes.splice(i, 1);
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+    setNotesItem(updatedNotes);
   };
 
   const editTask = () => {
-    const prevNotes = getData();
-    let editable = prevNotes[editIndex];
+    const updatedNotes = [...notesItem];
+    let editable = updatedNotes[editIndex];
     editable.title = title;
     editable.task = task;
-    prevNotes[editIndex] = editable;
-    localStorage.setItem("notes", JSON.stringify(prevNotes));
+    updatedNotes[editIndex] = editable;
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
     setTitle("");
     setTask("");
     setEditIndex(null);
     setIsEdit(false);
-    getData();
   };
 
   const handleEdit = (i) => {
